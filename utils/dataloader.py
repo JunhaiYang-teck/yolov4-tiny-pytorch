@@ -65,7 +65,8 @@ class YoloDataset(Dataset):
         #------------------------------#
         #   获得预测框
         #------------------------------#
-        box     = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:]])
+        # box     = np.array([np.array(list(map(int,box.split(',')))) for box in line[1:5]])
+        box     = np.array(line[1:])[np.newaxis, :].astype(int)
 
         if not random:
             scale = min(w/iw, h/ih)
@@ -221,7 +222,7 @@ class YoloDataset(Dataset):
         box_datas   = []
         index       = 0
         for line in annotation_line:
-            # 每一行进行分割
+            # 每一行进行分割，name, box, box, box, box
             line_content = line.split()
             # 打开图片
             image = Image.open(line_content[0])
